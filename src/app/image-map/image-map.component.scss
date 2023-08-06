@@ -1,0 +1,38 @@
+.item-align-center {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  gap: 10px;
+
+  &.place-start {
+    place-items: start;
+  }
+
+  &.vertical-between {
+    flex-direction: row;
+    place-content: space-between;
+  }
+}
+
+.image-map-view {
+  circle,
+  rect,
+  text {
+    stroke: black;
+    fill: #b0d2a1;
+
+    &:hover,
+    &.selected {
+      cursor: pointer;
+      fill: #3d9b15;
+    }
+  }
+
+  circle {
+    stroke-width: 0.25;
+  }
+
+  rect {
+    stroke-width: 2.5;
+  }
+}

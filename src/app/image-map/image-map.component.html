@@ -1,0 +1,94 @@
+<svg
+  class="image-map-view"
+  xmlns="http://www.w3.org/2000/svg"
+  [attr.viewBox]="viewBox"
+  *ngIf="imageSrc; else loadingRef"
+  #svgRef
+>
+  <image
+    [attr.width]="imageWidth"
+    [attr.height]="imageHeight"
+    [attr.xlink:href]="imageSrc"
+    [cdkContextMenuTriggerFor]="chooseShape"
+    #chooseShapeTrigger="cdkContextMenuTriggerFor"
+  />
+  <ng-container *ngFor="let point of points; let pointIndex = index">
+    <g
+      appDragging
+      [point]="point"
+      (changed)="onDragEnd($event, pointIndex)"
+      [cdkContextMenuTriggerFor]="editShape"
+      [cdkContextMenuTriggerData]="{ index: pointIndex }"
+      #editShapeTrigger="cdkContextMenuTriggerFor"
+    >
+      <circle
+        *ngIf="point.type === 'CIRCLE'"
+        [attr.cx]="point.x"
+        [attr.cy]="point.y"
+        r="10"
+      ></circle>
+      <text *ngIf="point.type === 'LABEL'" [attr.x]="point.x" [attr.y]="point.y">
+        {{ point.data }}
+      </text>
+      <rect
+        *ngIf="point.type === 'RECTANGLE'"
+        [attr.x]="point.x"
+        [attr.y]="point.y"
+        width="50"
+        height="20"
+      />
+    </g>
+  </ng-container>
+</svg>
+
+<ng-template #loadingRef>
+  <div class="item-align-center">
+    <mat-spinner></mat-spinner>
+    <p class="mat-title">loading...</p>
+  </div>
+</ng-template>
+
+<ng-template #chooseShape>
+  <div class="item-align-center place-start" cdkMenu>
+    <button color="accent" mat-raised-button (click)="createCircle($event)">Create Circle</button>
+    <button color="accent" mat-raised-button (click)="createRectangle($event)">
+      Create Rectangle
+    </button>
+    <button color="accent" mat-raised-button (click)="createLabel($event)">
+      Create Date Label
+    </button>
+  </div>
+</ng-template>
+
+<ng-template #editShape let-index="index">
+  <div class="item-align-center place-start" cdkMenu>
+    <button color="warn" mat-raised-button (click)="editProperties(index)">Edit</button>
+    <button color="warn" mat-raised-button (click)="duplicatePoint(index)">Duplicate</button>
+    <button color="warn" mat-raised-button (click)="deletePoint(index)">Delete</button>
+  </div>
+</ng-template>
+
+<ng-template #formDialogRef let-point>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Edit Point</mat-card-title>
+      <mat-card-subtitle>{{ point.type }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field [style.width.%]="100">
+        <mat-label>Data</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+          [(ngModel)]="point.data"
+        ></textarea>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      <button color="primary" mat-button (click)="cancel()">Cancel</button>
+      <button color="warn" mat-raised-button (click)="save(point)">Save</button>
+    </mat-card-actions>
+  </mat-card>
+</ng-template>
