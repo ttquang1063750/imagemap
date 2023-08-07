@@ -10,7 +10,7 @@
     "lint": "ng lint",
     "prettier": "prettier --check 'src/**/*.{ts,html,scss}'",
     "prettier:write": "prettier --write --cache 'src/**/*.{ts,html,scss}'",
-    "deploy": "ng deploy --base-href=/imagemap/"
+    "deploy": "ng deploy"
   },
   "private": true,
   "dependencies": {
@@ -40,7 +40,7 @@
     "@types/jasmine": "~4.3.0",
     "@typescript-eslint/eslint-plugin": "5.62.0",
     "@typescript-eslint/parser": "5.62.0",
-    "angular-cli-ghpages": "0.6.2",
+    "angular-cli-ghpages": "1.0.6",
     "eslint": "^8.44.0",
     "eslint-plugin-prettier": "^5.0.0",
     "jasmine-core": "~4.6.0",

@@ -62,16 +62,16 @@ export class DraggingDirective implements AfterViewInit {
     const position = this.getPosition(event);
     const child = this.child as SVGCircleElement;
 
-    child.cx.baseVal.value = position.x;
-    child.cy.baseVal.value = position.y;
+    child.setAttribute('cx', `${position.x}`);
+    child.setAttribute('cy', `${position.y}`);
   }
 
   private moveShape(event: MouseEvent) {
     const position = this.getPosition(event);
     const child = this.child as SVGRectElement;
 
-    child.x.baseVal.value = position.x;
-    child.y.baseVal.value = position.y;
+    child.setAttribute('x', `${position.x}`);
+    child.setAttribute('y', `${position.y}`);
   }
 
   private getPosition(event: MouseEvent): DOMPoint {
